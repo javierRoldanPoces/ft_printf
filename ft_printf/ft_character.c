@@ -1,28 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_character.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/19 17:39:42 by jroldan-          #+#    #+#             */
-/*   Updated: 2022/12/20 21:07:35 by jroldan-         ###   ########.fr       */
+/*   Created: 2022/12/20 20:31:18 by jroldan-          #+#    #+#             */
+/*   Updated: 2022/12/20 21:06:25 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
 
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <stdlib.h>
-# include <stdarg.h>
+void	ft_putchar(char c, int *len)
+{
+	write(1, &c, 1);
+	(*len)++;
+}
 
-void		ft_putchar(char c, int *len);
-int			ft_printf(char const *fnt, ...);
-int			ft_putstr(char *s);
-static int	check_base(char *base);
-static void	ft_putnbr_base(int nbr, char *base, int *len);
+static size_t	ft_strlen(const char *s)
+{	
+	size_t	i;
 
-#endif
+	i = 0;
+	while (s[i] != '\0')
+	{
+		i++;
+	}
+	return (i);
+}
+
+int	ft_putstr(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < ft_strlen(s))
+	{
+		write(1, &s[i], 1);
+		i++;
+	}
+	return (i);
+}

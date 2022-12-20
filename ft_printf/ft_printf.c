@@ -6,88 +6,105 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 17:39:31 by jroldan-          #+#    #+#             */
-/*   Updated: 2022/12/19 20:07:43 by jroldan-         ###   ########.fr       */
+/*   Updated: 2022/12/20 21:09:01 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static	void	ft_putchar_fd(char c, int fd)
+static int	check_base(char *base)
 {
-	write(fd, &c, 1);
-}
-
-static size_t	ft_strlen(const char *s)
-{	
-	size_t	i;
+	int	i;
+	int	z;
 
 	i = 0;
-	while (s[i] != '\0')
+	z = 0;
+	if (base[0] == '\0' || base[1] == '\0')
+		return (0);
+	while (base[i])
 	{
+		z = i + 1;
+		if (base[i] == '+' || base[i] == '-')
+			return (0);
+		if (base[i] < 32 || base[i] > 126)
+			return (0);
+		while (base[z])
+		{
+			if (base[i] == base[z])
+				return (0);
+			z++;
+		}
 		i++;
 	}
-	return (i);
+	return (1);
 }
 
-static char	*ft_strrchr(const char *s, int c)
+static void	ft_putnbr_base(int nbr, char *base, int *len)
 {
-	int		lastc;
-	int		i;
-	char	*scpy;
+	int	size_base;
+	int	nbr_final[100];
+	int	i;
 
 	i = 0;
-	lastc = -1;
-	scpy = (char *)s;
-	if ((char)c == '\0')
-		return (&(scpy[ft_strlen(scpy)]));
-	while (s[i] != '\0')
+	size_base = 0;
+	if (check_base(base))
 	{
-		if (s[i] == (char)c)
-			lastc = i;
-		i++;
+		if (nbr < 0)
+		{
+			nbr = -nbr;
+			ft_putchar('-', len);
+		}
+		while (base[size_base])
+			size_base++;
+		while (nbr)
+		{
+			nbr_final[i] = nbr % size_base;
+			nbr = nbr / size_base;
+			i++;
+		}
+		while (--i >= 0)
+			ft_putchar(base[nbr_final[i]], len);
 	}
-	if (lastc == -1)
-		return (NULL);
-	return (&scpy[lastc]);
 }
 
-
-int	ft_printf(char const *argslist, ...)
+int	ft_printf(char const *fnt, ...)
 {
 	va_list	args;
-	char	*ptr;
+	int		len;
+	char	*p;
 
-	va_start(args, argslist);
-	printf("argslist: %s\n", argslist);
-	
-	ptr = va_arg(args, char *);	
-	while (ptr)
+	len = 0;
+	p = (char *)fnt;
+	va_start(args, fnt);
+	while (*p != '\0')
 	{
-		if (*ptr == '%' && ptr[1] == 's')
+		if (*p == '%' && *(p + 1) == 'c')
 		{
-			putstr(va_arg(args, char *);)
-			ptr++;
+			ft_putchar(va_arg(args, int), &len);
+			p = p + 2;
 		}
-		else if (*ptr == '%' && ptr[1] == 'c')
+		if (*p == '%' && *(p + 1) == 's')
 		{
-			putchar(va_arg(args, char *);
-			ptr++
+			len = len + ft_putstr(va_arg(args, char *));
+			p = p + 1;
 		}
-		else{
-			putchar(*ptr);
+		if (*p == '%' && *(p + 1) == 'p')
+		{
+			ft_putnbr_base(16, "123456789abcdefg", &len);
+			ft_putstr("0x");
 		}
-		ptr++;
-		
-
+		else
+			ft_putchar(*p, &len);
+		p++;
 	}
-	printf("ptr: %s\n", ptr);
-	ptr = va_arg(args, char *);
-	printf("ptr1: %s\n", ptr);
+	printf("\n%i",len);
+	printf("\n%p", &p);
 	va_end(args);
-	return (0);
+	return (len);
 }
 
 int	main(void)
 {
-	ft_printf("hol%sdsdsds","hola dkdfdf");
+	ft_printf("%c %s",'s', "Adios");
+
 }

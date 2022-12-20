@@ -6,14 +6,14 @@
 #    By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/18 12:30:31 by jroldan-          #+#    #+#              #
-#    Updated: 2022/12/19 17:37:16 by jroldan-         ###   ########.fr        #
+#    Updated: 2022/12/20 20:40:11 by jroldan-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = ft_printf.a
 CFLAG = -Wall -Wextra -Werror
 
-SRC =libftprintf.c 
+SRC = ft_printf.c ft_character.c
 
 CC = gcc
 OBJ = $(SRC:.c=.o)
@@ -27,9 +27,9 @@ all : $(NAME)
 re : fclean all
 
 clean :
-	rm - f *.o $(NAME)
+	rm  -f $(OBJ)
 
 fclean :
-	rm -f *.a *.o $(NAME)
+	rm  -f $(NAME)
 
 .PHONY : clean fclean all re
