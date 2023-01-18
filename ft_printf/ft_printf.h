@@ -6,7 +6,7 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 17:39:42 by jroldan-          #+#    #+#             */
-/*   Updated: 2022/12/20 21:07:35 by jroldan-         ###   ########.fr       */
+/*   Updated: 2023/01/18 07:38:16 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 void		ft_putchar(char c, int *len);
 int			ft_printf(char const *fnt, ...);
 int			ft_putstr(char *s);
-static int	check_base(char *base);
-static void	ft_putnbr_base(int nbr, char *base, int *len);
+//static int	check_base(char *base);
+int			*ft_putnbr_base(void *nbr, char *base, int *len);
 
 #endif

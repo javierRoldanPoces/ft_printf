@@ -6,66 +6,11 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 17:39:31 by jroldan-          #+#    #+#             */
-/*   Updated: 2022/12/20 21:09:01 by jroldan-         ###   ########.fr       */
+/*   Updated: 2023/01/18 09:01:04 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	check_base(char *base)
-{
-	int	i;
-	int	z;
-
-	i = 0;
-	z = 0;
-	if (base[0] == '\0' || base[1] == '\0')
-		return (0);
-	while (base[i])
-	{
-		z = i + 1;
-		if (base[i] == '+' || base[i] == '-')
-			return (0);
-		if (base[i] < 32 || base[i] > 126)
-			return (0);
-		while (base[z])
-		{
-			if (base[i] == base[z])
-				return (0);
-			z++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-static void	ft_putnbr_base(int nbr, char *base, int *len)
-{
-	int	size_base;
-	int	nbr_final[100];
-	int	i;
-
-	i = 0;
-	size_base = 0;
-	if (check_base(base))
-	{
-		if (nbr < 0)
-		{
-			nbr = -nbr;
-			ft_putchar('-', len);
-		}
-		while (base[size_base])
-			size_base++;
-		while (nbr)
-		{
-			nbr_final[i] = nbr % size_base;
-			nbr = nbr / size_base;
-			i++;
-		}
-		while (--i >= 0)
-			ft_putchar(base[nbr_final[i]], len);
-	}
-}
 
 int	ft_printf(char const *fnt, ...)
 {
@@ -90,21 +35,61 @@ int	ft_printf(char const *fnt, ...)
 		}
 		if (*p == '%' && *(p + 1) == 'p')
 		{
-			ft_putnbr_base(16, "123456789abcdefg", &len);
 			ft_putstr("0x");
+			ft_putnbr_base(va_arg(args, char *), "0123456789abcdef", &len);
+			p = p + 2;
 		}
+		if (*p == '%' && *(p + 1) == 'd')
+		{
+			ft_putnbr_base(va_arg(args, long *), "0123456789", &len);
+			p = p + 2;
+		}/*
+		if (*p == '%' && *(p + 1) == 'i')
+		{
+			ft_putnbr_base(va_arg(args, char *), "0123456789", &len);
+			p = p + 1;
+		}
+		if (*p == '%' && *(p + 1) == 'u')
+		{
+			ft_putnbr_base(va_arg(args, char *), "0123456789", &len);
+			p = p + 1;
+		}
+		if (*p == '%' && *(p + 1) == 'x')
+		{
+			ft_putnbr_base(va_arg(args, char *), "0123456789abcdef", &len);
+			p = p + 2;
+		}
+		if (*p == '%' && *(p + 1) == 'X')
+		{
+			ft_putnbr_base(va_arg(args, char *), "0123456789ABCDEF", &len);
+			p = p + 1;
+		}	*/
 		else
 			ft_putchar(*p, &len);
 		p++;
 	}
-	printf("\n%i",len);
-	printf("\n%p", &p);
 	va_end(args);
 	return (len);
 }
 
 int	main(void)
 {
-	ft_printf("%c %s",'s', "Adios");
+	char	c;
 
+	c = 'b';
+	ft_printf("%c %s", 's', "Adios");
+	printf("\nOriginal p : %p\n", &c);
+	ft_printf("\nMi funcion p : %p\n", &c);
+	printf("\nOriginal d: %d\n", -98);
+	ft_printf("\nMi funcion d: %d\n", -98);
+	
+/*	printf("\nOriginal i: %i\n", 42);
+	ft_printf("\nMi funcion i: %i\n", 42);
+	printf("\nOriginal u: %u\n", 39);
+	ft_printf("\nMi funcion u: %u\n", 39);
+	printf("\nOriginal x: %x\n", 9900);
+	ft_printf("\nMi funcion x: %x\n", 9900);
+	printf("\nOriginal X: %X\n", 9900);
+	ft_printf("\nMi funcion X: %X\n", 9900);
+*/
 }

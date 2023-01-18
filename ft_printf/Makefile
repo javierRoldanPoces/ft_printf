@@ -6,14 +6,14 @@
 #    By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/18 12:30:31 by jroldan-          #+#    #+#              #
-#    Updated: 2022/12/20 20:40:11 by jroldan-         ###   ########.fr        #
+#    Updated: 2023/01/17 20:52:19 by jroldan-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_printf.a
 CFLAG = -Wall -Wextra -Werror
 
-SRC = ft_printf.c ft_character.c
+SRC = ft_printf.c ft_character.c ft_digit.c
 
 CC = gcc
 OBJ = $(SRC:.c=.o)
