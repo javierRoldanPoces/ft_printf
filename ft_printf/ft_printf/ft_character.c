@@ -6,13 +6,13 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:31:18 by jroldan-          #+#    #+#             */
-/*   Updated: 2022/12/20 20:33:25 by jroldan-         ###   ########.fr       */
+/*   Updated: 2023/01/17 20:49:11 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static void	ft_putchar(char c, int *len)
+void	ft_putchar(char c, int *len)
 {
 	write(1, &c, 1);
 	(*len)++;
@@ -30,7 +30,7 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-static int	ft_putstr(char *s)
+int	ft_putstr(char *s)
 {
 	size_t	i;
 
