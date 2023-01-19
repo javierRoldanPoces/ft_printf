@@ -6,7 +6,7 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/20 20:31:18 by jroldan-          #+#    #+#             */
-/*   Updated: 2023/01/17 20:49:11 by jroldan-         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:17:28 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,22 @@ static size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_putstr(char *s)
+void	ft_putstr(char *s, int *len)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < ft_strlen(s))
+	if (s == NULL)
 	{
-		write(1, &s[i], 1);
-		i++;
+		write(1, "(null)", 6);
+		*len += 6;
 	}
-	return (i);
+	else
+	{
+		while (i < ft_strlen(s))
+		{
+			ft_putchar(s[i], len);
+			i++;
+		}
+	}
 }

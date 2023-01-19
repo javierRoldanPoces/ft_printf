@@ -6,7 +6,7 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 17:39:31 by jroldan-          #+#    #+#             */
-/*   Updated: 2023/01/18 09:01:04 by jroldan-         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:19:32 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,79 +17,103 @@ int	ft_printf(char const *fnt, ...)
 	va_list	args;
 	int		len;
 	char	*p;
+	char	*pn;
 
 	len = 0;
 	p = (char *)fnt;
 	va_start(args, fnt);
 	while (*p != '\0')
-	{
-		if (*p == '%' && *(p + 1) == 'c')
+	{	
+		pn = p + 1;
+		if (*p == '%' && *pn == 'c')
 		{
 			ft_putchar(va_arg(args, int), &len);
-			p = p + 2;
+			p += 1;
 		}
-		if (*p == '%' && *(p + 1) == 's')
+		else if (*p == '%' && *pn == 's')
 		{
-			len = len + ft_putstr(va_arg(args, char *));
+			ft_putstr(va_arg(args, char *), &len);
 			p = p + 1;
 		}
-		if (*p == '%' && *(p + 1) == 'p')
+		else if (*p == '%' && *pn == '%')
+		{
+			ft_putchar('%', &len);
+			p += 1;
+		}
+		else if (*p == '%' && *pn == 'd')
+		{
+			ft_putnbr_base(va_arg(args, long *), "0123456789", &len, pn);
+			p = p + 1;
+		}
+		else if (*p == '%' && *pn == 'i')
+		{
+			ft_putnbr_base(va_arg(args, char *), "0123456789", &len, pn);
+			p = p + 1;
+		}
+
+/*			if (*p == '%' && *pn == 'x')
+		{
+			ft_putnbr_base(va_arg(args, char *), "0123456789abcdef", &len, pn);
+			p = p + 2;
+		}
+			if (*p == '%' && *pn == 'p')
 		{
 			ft_putstr("0x");
-			ft_putnbr_base(va_arg(args, char *), "0123456789abcdef", &len);
-			p = p + 2;
-		}
-		if (*p == '%' && *(p + 1) == 'd')
-		{
-			ft_putnbr_base(va_arg(args, long *), "0123456789", &len);
-			p = p + 2;
-		}/*
-		if (*p == '%' && *(p + 1) == 'i')
-		{
-			ft_putnbr_base(va_arg(args, char *), "0123456789", &len);
+			ft_putnbr_base(va_arg(args, char *), "0123456789abcdef", &len, pn);
 			p = p + 1;
 		}
-		if (*p == '%' && *(p + 1) == 'u')
+
+		if (*p == '%' && *pn == 'u')
 		{
-			ft_putnbr_base(va_arg(args, char *), "0123456789", &len);
-			p = p + 1;
-		}
-		if (*p == '%' && *(p + 1) == 'x')
-		{
-			ft_putnbr_base(va_arg(args, char *), "0123456789abcdef", &len);
+			ft_putnbr_base(va_arg(args, char *), "0123456789", &len, pn);
 			p = p + 2;
 		}
-		if (*p == '%' && *(p + 1) == 'X')
+		
+		if (*p == '%' && *pn == 'X')
 		{
-			ft_putnbr_base(va_arg(args, char *), "0123456789ABCDEF", &len);
+			ft_putnbr_base(va_arg(args, char *), "0123456789ABCDEF", &len, pn);
 			p = p + 1;
-		}	*/
+		}*/
 		else
 			ft_putchar(*p, &len);
-		p++;
+		p = p + 1;
 	}
+	
 	va_end(args);
 	return (len);
 }
 
-int	main(void)
-{
-	char	c;
 
-	c = 'b';
-	ft_printf("%c %s", 's', "Adios");
-	printf("\nOriginal p : %p\n", &c);
-	ft_printf("\nMi funcion p : %p\n", &c);
-	printf("\nOriginal d: %d\n", -98);
-	ft_printf("\nMi funcion d: %d\n", -98);
-	
-/*	printf("\nOriginal i: %i\n", 42);
-	ft_printf("\nMi funcion i: %i\n", 42);
-	printf("\nOriginal u: %u\n", 39);
-	ft_printf("\nMi funcion u: %u\n", 39);
-	printf("\nOriginal x: %x\n", 9900);
-	ft_printf("\nMi funcion x: %x\n", 9900);
-	printf("\nOriginal X: %X\n", 9900);
-	ft_printf("\nMi funcion X: %X\n", 9900);
-*/
+ /*
+ int	main(void)
+ {
+ 	//char	c;
+
+ 	//c = 'b';
+	//ft_printf("%c", '0'); 
+	//printf("%c", '0');
+ 	//ft_printf("%s", "Hola juan");
+	printf(" NULL %s NULL \n", NULL);
+	ft_printf(" NULL %s NULL ", NULL);
+	//printf("\n");
+	//printf(" %c", '0' - 256);
+	//ft_printf(" %c", '0' - 256);
+	//printf(" %c", '0' - 256);
 }
+
+ 	
+	printf("\nOriginal p : %p\n", &c);
+ 	ft_printf("\nMi funcion p : %p\n", &c);
+ 	printf("\nOriginal d: %d\n", 98);
+ 	ft_printf("\nd: %d\n", 98);
+ 	printf("\nOriginal i: %i\n", -42);
+ 	ft_printf("\nMi funcion i: %i\n", -42);
+ 	printf("\nOriginal u: %u\n", -39);
+ 	ft_printf("\nMi funcion u: %u\n", -39);
+ 	printf("\nOriginal x: %x\n", -9900);
+ 	ft_printf("\nMi funcion x: %x\n", -9900);
+ 	ft_printf("\nX: %X", -9900);
+ 	printf("\nOriginal X: %X\n", -9900);
+
+ }
+	*/
