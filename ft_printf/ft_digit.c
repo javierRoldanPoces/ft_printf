@@ -6,27 +6,45 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:50:29 by jroldan-          #+#    #+#             */
-/*   Updated: 2023/01/18 09:02:52 by jroldan-         ###   ########.fr       */
+/*   Updated: 2023/01/19 20:55:57 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+/*
+static void	recursiva_long(long nbr, long size, char *base, int *len)
+{
+	if (nbr >= size)
+	{
+		recursiva_long((nbr / size), size, base, len);
+		ft_putchar(base[nbr % size], length);
+	}
+	else
+		ft_putchar(base[nbr % size], length);
+}
+*/
 
-int	*ft_putnbr_base(void *nbr, char *base, int *len)
+void	ft_putnbr_base(long nbr, char *base, int *len, char *p)
 {
 	unsigned long	size_base;
 	long			nbr_final[100];
 	int				i;
 	long			cast;
 
-	cast = (long)nbr;
 	i = 0;
 	size_base = 0;
-	if (cast < 0)
+	if (*p == 'u' || *p == 'x' || *p == 'X')
+		cast = (unsigned int)nbr;
+	if (*p == 'p')
+		cast = (unsigned long)nbr;
+	if (*p == 'd' || *p == 'i')
 	{
-		printf("\nEntra en el bucle control de signo");
-		ft_putchar('-', len);
-		cast = cast * -1;
+		cast = (int)nbr;
+		if (cast < 0)
+		{
+			ft_putchar('-', len);
+			cast = cast * -1;
+		}
 	}
 	while (base[size_base])
 		size_base++;
@@ -38,27 +56,10 @@ int	*ft_putnbr_base(void *nbr, char *base, int *len)
 	}
 	while (--i >= 0)
 		ft_putchar(base[nbr_final[i]], len);
-	return (len);
+	//return (len);
 }
-/*
-void	ft_putnbr_fd(int n, int fd)
-{
-	long	i;
 
-	i = n;
-	if (i < 0)
-	{
-		ft_putchar_fd('-', fd);
-		i = i * -1;
-	}
-	if (i > 9)
-	{
-		ft_putnbr_fd(i / 10, fd);
-		ft_putchar((i % 10) + 48, fd);
-	}
-	if (i <= 9)
-	{
-		ft_putchar(i + '0', fd);
-	}
-}
-*/
+// unsigned int son todos lo x y la U ---echo
+// d e i son int c                    --echo
+// p unsignedl long					 --echo
+// controlar los null				-- echo en string
