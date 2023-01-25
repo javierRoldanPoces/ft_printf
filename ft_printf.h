@@ -6,7 +6,7 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 17:39:42 by jroldan-          #+#    #+#             */
-/*   Updated: 2023/01/20 13:49:11 by jroldan-         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:18:09 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 void	ft_putchar(char c, int *len);
 int		ft_printf(char const *fnt, ...);
 void	ft_putstr(char *s, int *len);
-void	ft_putnbr_base(int nbr, char *base, int *len, char *p);
-
+void	ft_putnbr_d_i(int nbr, int *len);
+void	ft_putnbr_p(unsigned long nbr, char *base, int *len);
+void	ft_putnbr_hex(unsigned int nbr, char *base, int *len, char *p);
+void	ft_putnbr_unsigned_d(unsigned int nbr, int *len);
 #endif
