@@ -6,7 +6,7 @@
 /*   By: jroldan- <jroldan-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:50:29 by jroldan-          #+#    #+#             */
-/*   Updated: 2023/01/24 13:17:49 by jroldan-         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:15:43 by jroldan-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	ft_putnbr_hex(unsigned int nbr, char *base, int *len, char *p)
 
 	i = 0;
 	size_base = 0;
-	if (*(p + 1) == 'X')
+	if (*p == 'X')
 		base = "0123456789ABCDEF";
 	while (base[size_base])
 		size_base++;
